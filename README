@@ -1,3 +1,7 @@
 == Welcome to Rails
 
 Simple calendar and contacter for multi-users.
+
+== Rails Version
+
+Developed with rails rails 3.0.9, ruby 1.8.7
