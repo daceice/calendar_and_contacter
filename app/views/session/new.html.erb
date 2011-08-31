@@ -1,0 +1,29 @@
+<center><h1>Session#new</h1></center>
+<% form_tag({ :action => 'create'}, :method => :post) do  %>
+<%= hidden_field_tag :return_url, params[:return_url]%>
+<table align='center'>
+	<tr>
+		<td>
+		<label for="">用户名：</label>
+		</td>
+		<th>
+		<%= text_field_tag 'login_name', params[:login_name] %>
+		</th>
+	</tr>
+	<tr>
+		<td>	
+		<label for="">密&nbsp;&nbsp;码：</label>
+		</td>
+		<th>
+		<%= password_field_tag 'plain_password', params[:password] %>
+		</th>
+	</tr>
+	<tr>
+		<th colspan=2>
+		<input type="submit" value="登录" />
+		</th>
+	</tr>
+</table>		
+<% end %>
+<br>
+<center>By Daceice 2011</center>

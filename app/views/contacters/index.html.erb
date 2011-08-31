@@ -1,0 +1,56 @@
+<h1>Listing contacters</h1>
+
+<% form_tag contacters_path, :method => :get do -%>
+  <div id="search">
+<%=text_field_tag "search", params[:search]%>
+    <%= submit_tag '查找', :class => 'button' %>
+  </div>
+<% end %>
+
+<br>
+<table>
+
+<% @contacters.each do |contacter| %>
+
+	<tr>
+	  <th width=100>Name</th>
+	  <th width=200>Company</th>
+	  <th width=200>Email</th>
+	  <th width=150>Phone</th>
+	  <th width=150>Cellphone</th>
+	  <td rowspan=4>
+			 <%= link_to 'Show', contacter %>
+	<% if session[:user_id] == contacter.user_id %>
+		    <%= link_to 'Edit', edit_contacter_path(contacter) %>
+		    <%= link_to 'Destroy', contacter, :confirm => 'Are you sure?', :method => :delete %>	
+	<% end %>	
+	  </td>
+	</tr>
+  <tr>
+    <td><span style="FONT-WEIGHT: strong; FONT-SIZE: 14pt;"><%= contacter.name %></span></td>
+    <td><%= contacter.company %></td>
+    <td><%= contacter.email %></td>
+    <td><%= contacter.phone %></td>
+    <td><%= contacter.cellphone %></td>
+   
+		<tr>
+		  <th colspan=3>Address</th>
+		  <th colspan=2>Note</th>
+		</tr>
+		
+		<tr>
+    	<td colspan=3><%= contacter.address %></td>
+    	<td colspan=2><%= contacter.note %></td>
+		</tr>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Contacter', new_contacter_path %>
+<% if (params[:search] != nil && params[:search] != '')%>
+<%= link_to 'Back', contacters_path%>
+<% end %>
+<br>
+<%= (page_admin( :contacters_path, @page.count, @page.limit, params, ' ')).html_safe%>

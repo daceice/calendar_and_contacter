@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @contacter.name %>
+</p>
+
+<p>
+  <b>Company:</b>
+  <%= @contacter.company %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @contacter.email %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%= @contacter.phone %>
+</p>
+
+<p>
+  <b>Cellphone:</b>
+  <%= @contacter.cellphone %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%= @contacter.note %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @contacter.address %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @contacter.user.show_name %>
+</p>
+
+<p>
+  <b>Public:</b>
+  <%= @contacter.for_public %>
+</p>
+
+
+<% if session[:user_id] == @contacter.user_id %>
+<%= link_to 'Edit', edit_contacter_path(@contacter) %> |
+<%= link_to 'Back', contacters_path %>
+<% end %>

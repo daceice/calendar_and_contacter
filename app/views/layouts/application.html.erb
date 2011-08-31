@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calendar And Contacter</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+	
+  <%= stylesheet_link_tag '/theme/jquery-ui.css' %>
+  <%= stylesheet_link_tag 'jquery.jgrowl.css' %>
+	
+	<%= javascript_include_tag "jquery.js"%>
+	<%= javascript_include_tag "jquery.jgrowl.js"%>
+	
+	<!-- jQuery ui -->
+	<%= javascript_include_tag "/javascripts/ui/jquery.ui.core.js"%>
+	<%= javascript_include_tag "/javascripts/ui/jquery.ui.widget.js"%>
+	<%= javascript_include_tag "/javascripts/ui/jquery.ui.mouse.js"%>
+	<%= javascript_include_tag "/javascripts/ui/jquery.ui.button.js"%>
+	<%= javascript_include_tag "/javascripts/ui/jquery.ui.draggable.js"%>
+	<%= javascript_include_tag "/javascripts/ui/jquery.ui.position.js"%>
+	<%= javascript_include_tag "/javascripts/ui/jquery.ui.resizable.js"%>
+	<%= javascript_include_tag "/javascripts/ui/jquery.ui.dialog.js"%>
+	<%= javascript_include_tag "/javascripts/ui/jquery.effects.core.js"%>
+	
+	
+	<!-- -->
+	
+	<script language='javascript'>
+	function isdefined(variable)
+	{
+	    return (typeof(variable) == "undefined") ? false: true;
+	}
+	
+	var notice = '<%= flash[:notice]%>'
+	<% flash[:notice] = ''%>
+	if(notice != "" && isdefined(notice) )
+	{
+		//alert(notice.escape);
+		$(function() {
+			$.jGrowl(notice);
+		});
+	}
+	
+
+	</script>
+
+  <%= yield :head%>
+
+
+
+</head>
+<body>
+	<% if @current_user%> 
+		<%= @current_user.login_name%>, 
+	<%end%>
+	welcome! 
+	[<%=link_to 'INDEX', user_panel_index_url%>]
+	<br>
+	<span style="color: red"><%= show_error %></span>
+	<span style="color: green"><%= show_notice %></span>
+	<hr>
+<%= yield %>
+
+</body>
+</html>

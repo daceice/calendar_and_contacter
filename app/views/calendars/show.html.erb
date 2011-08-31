@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= shift_date(@calendar.date) %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @calendar.user.show_name %>
+</p>
+
+<p>
+  <b>Public:</b>
+  <%= @calendar.for_public %>
+</p>
+
+<p>
+  <b>Note:</b>
+<br>
+  <%= (@calendar.content).html_safe %>
+</p>
+
+
+<% if session[:user_id] == @calendar.user_id %>
+<%= link_to 'Edit', edit_calendar_path(@calendar) %> |
+<%= link_to 'Back', calendars_path %>
+<% end %>

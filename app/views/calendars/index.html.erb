@@ -1,0 +1,39 @@
+<h1>Listing calendars</h1>
+
+<% form_tag calendars_path, :method => :get do -%>
+  <div id="search">
+<%=text_field_tag "search", params[:search]%>
+    <%= submit_tag '查找', :class => 'button' %>
+  </div>
+<% end %>
+<br>
+<table>
+  <tr>
+    <th width=100>Date</th>
+    <th width=100>User</th>
+    <th width=100>Note</th>
+    <th width=150></th>
+  </tr>
+
+<% @calendars.each do |calendar| %>
+  <tr>
+    <td><%= shift_date(calendar.date) %></td>
+    <td><%= calendar.user.show_name %></td>
+    <td><%= (calendar.content).html_safe %></td>
+    <td><%= link_to 'Show', calendar %>
+<% if session[:user_id] == calendar.user_id %>
+    <%= link_to 'Edit', edit_calendar_path(calendar) %>
+    <%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %></td>
+<% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Calendar', new_calendar_path %>
+<% if (params[:search] != nil && params[:search] != '')%>
+<%= link_to 'Back', calendars_path%>
+<% end %>
+<br>
+<%= (page_admin( :calendars_path, @page.count, @page.limit, params, ' ')).html_safe%>

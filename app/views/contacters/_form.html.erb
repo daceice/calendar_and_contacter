@@ -1,0 +1,65 @@
+<%content_for:head do%>
+
+<%= javascript_include_tag "ui/jquery.ui.autocomplete.js"%>
+
+<%end%>
+
+<%= form_for(@contacter) do |f| %>
+  <% if @contacter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@contacter.errors.count, "error") %> prohibited this contacter from being saved:</h2>
+
+      <ul>
+      <% @contacter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    company<br />
+		
+		<script>
+			jQuery(function() {
+				jQuery( "#contacter_company" ).autocomplete({
+					source: '/data_sources/all_company'
+				});
+			});
+		</script>
+		
+    <%= f.text_field :company %>
+
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone %>
+  </div>
+  <div class="field">
+    <%= f.label :cellphone %><br />
+    <%= f.text_field :cellphone %>
+  </div>
+  <div class="field">
+    <%= f.label :note %><br />
+    <%= f.text_area :note %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :for_public %><br />
+    <%= f.check_box :for_public %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
