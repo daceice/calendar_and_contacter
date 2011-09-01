@@ -4,4 +4,43 @@ Simple calendar and contacter for multi-users.
 
 == Rails Version
 
-Developed with rails rails 3.0.9, ruby 1.8.7
+Developed with rails 3.0.9, ruby 1.8.7
+
+== Site Map
+
+1. Login Page
+
+A user need to type in his/her login name and password in this page to login the system. If he/she has already logged in, it will auto-redirect to the user panel index page.
+
+2. UserPanel Index Page, include following links:
+
+Calendar
+Contacter
+User
+Change password
+Log out
+
+3. Calendar
+
+Calendar List: All your note and others' public note
+Calendar Bin: All note you delete from your list
+You can create a note ( and determine whether it is visible for other people), view a note, edit a note and delete it. Once you delete your note, you will find it in your bin in case you delete it by faulty operation. If you want to get it back, just edit it and update. If you really want to delete the note, destroy it in your bin.
+Quick search for Calendar List and Bin is available.
+
+4. Contacter
+
+There are almost the same functions with calendar section in this section.
+There is an auto-complete function for inputting the company name when you create a contacter or edit it.
+
+5. User
+
+The management of users is only available for Super admin whose id is "1".
+The admin can new a user, set his/her name and password and attribute "available".
+
+6. Change password
+
+Once a user is created, he/she can login to the system and change his/her password. But he/she cannot change his/her name or login name.
+
+7. Log out
+
+Just logout the system and redirect to the login page.
