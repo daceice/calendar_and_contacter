@@ -2,5 +2,9 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @calendar %> |
-<%= link_to 'Back', calendars_path %>
+<%= link_to 'Show', calendar_path(:id => @calendar.id, :return_path => params[:return_path] )%> | 
+<% if params[:return_path] == 'bin' %>
+<%= link_to 'Back To Bin', bin_calendars_path%>
+<% else %>
+<%= link_to 'Back To List', calendars_path %>
+<% end %>

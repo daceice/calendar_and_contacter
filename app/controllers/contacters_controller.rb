@@ -1,7 +1,7 @@
 class ContactersController < ApplicationController
   
-  before_filter :require_contacter_available, :include => [:edit, :update, :destroy, :show]
-  before_filter :require_contacter_editable, :include => [:edit, :update, :destroy]
+  before_filter :require_contacter_available, :only => [:show]
+  before_filter :require_contacter_editable, :only => [:edit, :update, :destroy]
   
   # GET /contacters
   # GET /contacters.xml
@@ -12,7 +12,7 @@ class ContactersController < ApplicationController
 
       @contacters = @page.sort_page_model({
         :model_name => "Contacter",
-        :sort_by => 'id', 
+        :sort_by => 'updated_at', 
         :sort_order => 'DESC', 
         :limit => 5,
         :conditions => ['available = ? and (user_id = ? or (for_public = ?))', 
@@ -26,7 +26,7 @@ class ContactersController < ApplicationController
         :model_name => "Contacter",
         :search_by => ['name', 'company', 'email', 'address', 'phone', 'cellphone', 'note'],
         :search_value => params[:search],
-        :sort_by => 'id', 
+        :sort_by => 'updated_at', 
         :sort_order => 'DESC',
         :limit => 5,
         :conditions => ['available = ? and (user_id = ? or (for_public = ?))',
@@ -42,6 +42,45 @@ class ContactersController < ApplicationController
     end
   end
 
+  # GET /contacters
+  # GET /contacters.xml
+  def bin
+    @page = Page.new
+
+    if params[:search] == nil
+
+      @contacters = @page.sort_page_model({
+        :model_name => "Contacter",
+        :sort_by => 'updated_at', 
+        :sort_order => 'DESC', 
+        :limit => 5,
+        :conditions => ['available = ? and (user_id = ?)', 
+          false, session[:user_id]],
+        :page_no =>  params[:page_no]
+      })
+
+    else
+
+      @contacters = @page.search_sort_page_model({
+        :model_name => "Contacter",
+        :search_by => ['name', 'company', 'email', 'address', 'phone', 'cellphone', 'note'],
+        :search_value => params[:search],
+        :sort_by => 'updated_at', 
+        :sort_order => 'DESC',
+        :limit => 5,
+        :conditions => ['available = ? and (user_id = ?)', 
+          false, session[:user_id]],
+        :page_no =>  params[:page_no]
+      })
+
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @contacters }
+    end
+  end
+  
   # GET /contacters/1
   # GET /contacters/1.xml
   def show
@@ -90,6 +129,7 @@ class ContactersController < ApplicationController
   # PUT /contacters/1.xml
   def update
     @contacter = Contacter.find(params[:id])
+    params[:contacter][:available] = true
 
     respond_to do |format|
       if @contacter.update_attributes(params[:contacter])
@@ -102,9 +142,7 @@ class ContactersController < ApplicationController
     end
   end
 
-  # DELETE /contacters/1
-  # DELETE /contacters/1.xml
-  def destroy
+  def to_bin
     @contacter = Contacter.find(params[:id])
     @contacter.available = false
     @contacter.save
@@ -115,10 +153,23 @@ class ContactersController < ApplicationController
     end
   end
   
+  # DELETE /contacters/1
+  # DELETE /contacters/1.xml
+  def destroy
+    @contacter = Contacter.find(params[:id])
+    @contacter.destroy
+
+    respond_to do |format|
+      format.html { redirect_to(bin_contacters_url) }
+      format.xml  { head :ok }
+    end
+  end
+  
   def require_contacter_available
     if params[:id]
       contacter = Contacter.find_by_id(params[:id])
-      if !contacter || contacter.available == false
+      if (!contacter) || ((contacter.for_public == false || contacter.available == false ) && contacter.user_id != session[:user_id])
+        puts 'rediract'
         redirect_to contacters_url
       end
     end

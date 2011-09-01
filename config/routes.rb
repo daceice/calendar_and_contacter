@@ -9,9 +9,23 @@ CalendarAndContacter::Application.routes.draw do
   post 'session/destroy'
   get 'session/destroy'
   
-  resources :calendars
+  resources :calendars do 
+    member do
+      get 'to_bin'
+    end
+    collection do 
+      get 'bin'
+    end
+  end
 
-  resources :contacters
+  resources :contacters do 
+    member do
+      get 'to_bin'
+    end
+    collection do 
+      get 'bin'
+    end
+  end
 
   resources :users
   

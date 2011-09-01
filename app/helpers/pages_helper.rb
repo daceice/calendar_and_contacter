@@ -155,7 +155,7 @@ module PagesHelper
     if this > 0	
       parameter = params
       parameter[:page_no] = this - 1
-    	result += link_to( '上一页', self.send(path, parameter))
+    	result += link_to( 'prev', self.send(path, parameter))
     	result += break_signal
     end
 
@@ -196,7 +196,7 @@ module PagesHelper
     if this < ( count - 1) / limit
       parameter = params
       parameter[:page_no] = this + 1
-    	result += link_to( '下一页', self.send(path, parameter))
+    	result += link_to( 'next', self.send(path, parameter))
     	result += break_signal
     end
     return result

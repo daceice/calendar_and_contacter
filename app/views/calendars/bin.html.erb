@@ -1,6 +1,6 @@
 <h1>Listing calendars</h1>
 
-<% form_tag calendars_path, :method => :get do -%>
+<% form_tag bin_calendars_path, :method => :get do -%>
   <div id="search">
 <%=text_field_tag "search", params[:search]%>
     <%= submit_tag '查找', :class => 'button' %>
@@ -20,10 +20,10 @@
     <td><%= shift_date(calendar.date) %></td>
     <td><%= calendar.user.show_name %></td>
     <td><%= (calendar.content).html_safe %></td>
-    <td><%= link_to 'Show', calendar %>
+    <td><%= link_to 'Show', calendar_path(:id => calendar.id, :return_path => 'bin') %>
 <% if session[:user_id] == calendar.user_id %>
-    <%= link_to 'Edit', edit_calendar_path(calendar) %>
-    <%= link_to 'Delete', to_bin_calendar_path(calendar.id) %></td>
+    <%= link_to 'Edit', edit_calendar_path(:id => calendar.id, :return_path => 'bin') %>
+    <%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %></td>
 <% end %>
   </tr>
 <% end %>
@@ -31,10 +31,9 @@
 
 <br />
 
-<%= link_to 'New Calendar', new_calendar_path %> | 
-<%= link_to 'Calendar Bin', bin_calendars_path %>
+<%= link_to 'Back To List', calendars_path %>
 <% if (params[:search] != nil && params[:search] != '')%>
- | <%= link_to 'Back', calendars_path%>
+ | <%= link_to 'Back', bin_calendars_path%>
 <% end %>
 <br>
-<%= (page_admin( :calendars_path, @page.count, @page.limit, params, ' ')).html_safe%>
+<%= (page_admin( :bin_calendars_path, @page.count, @page.limit, params, ' ')).html_safe%>

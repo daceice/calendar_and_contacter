@@ -1,6 +1,6 @@
 <h1>Listing contacters</h1>
 
-<% form_tag contacters_path, :method => :get do -%>
+<% form_tag bin_contacters_path, :method => :get do -%>
   <div id="search">
 <%=text_field_tag "search", params[:search]%>
     <%= submit_tag '查找', :class => 'button' %>
@@ -18,11 +18,10 @@
 	  <th width=200>Email</th>
 	  <th width=150>Phone</th>
 	  <th width=150>Cellphone</th>
-	  <td rowspan=4>
-			 <%= link_to 'Show', contacter %>
-	<% if session[:user_id] == contacter.user_id %>
-		    <%= link_to 'Edit', edit_contacter_path(contacter) %>
-		    <%= link_to 'Delete', to_bin_contacter_path(contacter.id) %>	
+	  <td rowspan=4><%= link_to 'Show', contacter_path(:id => contacter.id, :return_path => 'bin') %>
+<% if session[:user_id] == contacter.user_id %>
+    <%= link_to 'Edit', edit_contacter_path(:id => contacter.id, :return_path => 'bin') %>
+		    <%= link_to 'Destroy', contacter, :confirm => 'Are you sure?', :method => :delete %>	
 	<% end %>	
 	  </td>
 	</tr>
@@ -48,10 +47,9 @@
 
 <br />
 
-<%= link_to 'New Contacter', new_contacter_path %> | 
-<%= link_to 'Contacter Bin', bin_contacters_path %>
+<%= link_to 'Back To List', contacters_path %>
 <% if (params[:search] != nil && params[:search] != '')%>
- | <%= link_to 'Back', contacters_path%>
+ | <%= link_to 'Back', bin_contacters_path%>
 <% end %>
 <br>
 <%= (page_admin( :contacters_path, @page.count, @page.limit, params, ' ')).html_safe%>

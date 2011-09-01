@@ -1,7 +1,7 @@
 class CalendarsController < ApplicationController
   
-  before_filter :require_calendar_available, :include => [:edit, :update, :destroy, :show]
-  before_filter :require_calendar_editable, :include => [:edit, :update, :destroy]
+  before_filter :require_calendar_available, :only => [:show]
+  before_filter :require_calendar_editable, :only => [:edit, :update, :destroy]
   
   # GET /calendars
   # GET /calendars.xml
@@ -27,19 +27,55 @@ class CalendarsController < ApplicationController
         :search_value => params[:search],
         :sort_by => 'date', 
         :sort_order => 'DESC',
+        :conditions => ['available = ? and (user_id = ? or (for_public = ?))', 
+          true, session[:user_id], true],
         :page_no =>  params[:page_no]
       })
 
     end
-
-    
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @calendars }
     end
   end
+  
+  # GET /calendars
+  # GET /calendars.xml
+  def bin   
+    @page = Page.new
 
+    if params[:search] == nil
+
+      @calendars = @page.sort_page_model({
+        :model_name => "Calendar",
+        :sort_by => 'date', 
+        :sort_order => 'DESC', 
+        :conditions => ['available = ? and (user_id = ?)', 
+          false, session[:user_id]],
+        :page_no =>  params[:page_no]
+      })
+
+    else
+
+      @calendars = @page.search_sort_page_model({
+        :model_name => "Calendar",
+        :search_by => ['note'],
+        :search_value => params[:search],
+        :sort_by => 'date', 
+        :sort_order => 'DESC',
+        :conditions => ['available = ? and (user_id = ?)', 
+          false, session[:user_id]],
+        :page_no =>  params[:page_no]
+      })
+
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @calendars }
+    end
+  end
   # GET /calendars/1
   # GET /calendars/1.xml
   def show
@@ -88,6 +124,7 @@ class CalendarsController < ApplicationController
   # PUT /calendars/1.xml
   def update
     @calendar = Calendar.find(params[:id])
+    params[:calendar][:available] = true
 
     respond_to do |format|
       if @calendar.update_attributes(params[:calendar])
@@ -99,10 +136,8 @@ class CalendarsController < ApplicationController
       end
     end
   end
-
-  # DELETE /calendars/1
-  # DELETE /calendars/1.xml
-  def destroy
+  
+  def to_bin
     @calendar = Calendar.find(params[:id])
     @calendar.available = false
     @calendar.save
@@ -112,12 +147,24 @@ class CalendarsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  # DELETE /calendars/1
+  # DELETE /calendars/1.xml
+  def destroy
+    @calendar = Calendar.find(params[:id])
+    @calendar.destroy
+
+    respond_to do |format|
+      format.html { redirect_to(bin_calendars_url) }
+      format.xml  { head :ok }
+    end
+  end
   
   
   def require_calendar_available
     if params[:id]
       calendar = Calendar.find_by_id(params[:id])
-      if !calendar || calendar.available == false
+      if (!calendar) || ((calendar.for_public == false || calendar.available == false ) && calendar.user_id != session[:user_id])
         redirect_to calendars_url
       end
     end

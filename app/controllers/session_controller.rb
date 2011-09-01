@@ -1,6 +1,6 @@
 class SessionController < ApplicationController
   
-  before_filter :require_user_login, :include => []
+  before_filter :require_user_login, :only => []
   
   def new
     user = fetch_current_user

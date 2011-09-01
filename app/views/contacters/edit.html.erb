@@ -2,5 +2,9 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @contacter %> |
-<%= link_to 'Back', contacters_path %>
+<%= link_to 'Show', contacter_path(:id => @contacter.id, :return_path => params[:return_path]) %> | 
+<% if params[:return_path] == 'bin' %>
+<%= link_to 'Back To Bin', bin_contacters_path %>
+<% else %>
+<%= link_to 'Back To List', contacters_path %>
+<% end %>
