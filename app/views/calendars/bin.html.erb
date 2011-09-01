@@ -23,8 +23,9 @@
     <td><%= link_to 'Show', calendar_path(:id => calendar.id, :return_path => 'bin') %>
 <% if session[:user_id] == calendar.user_id %>
     <%= link_to 'Edit', edit_calendar_path(:id => calendar.id, :return_path => 'bin') %>
-    <%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %></td>
+    <%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %>
 <% end %>
+	</td>
   </tr>
 <% end %>
 </table>

@@ -1,7 +1,7 @@
 class CalendarsController < ApplicationController
   
   before_filter :require_calendar_available, :only => [:show]
-  before_filter :require_calendar_editable, :only => [:edit, :update, :destroy]
+  before_filter :require_calendar_editable, :only => [:edit, :update, :destroy, :delete]
   
   # GET /calendars
   # GET /calendars.xml

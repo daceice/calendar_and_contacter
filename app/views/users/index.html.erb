@@ -4,6 +4,7 @@
   <tr>
     <th width=200>Login name</th>
     <th width=100>Name</th>
+    <th width=100>Available</th>
     <th></th>
   </tr>
 
@@ -11,6 +12,7 @@
   <tr>
     <td><%= user.login_name %></td>
     <td><%= user.name %></td>
+    <td><%= user.available %></td>
     <td><%= link_to 'Show', user %>
 		<%= link_to 'Edit', edit_user_path(user) %>
     <%= link_to (user.available ? 'Stop' : 'Start' ), user, :confirm => 'Are you sure?', :method => :delete %></td>

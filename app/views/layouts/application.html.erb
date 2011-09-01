@@ -10,6 +10,12 @@
   <%= stylesheet_link_tag 'jquery.jgrowl.css' %>
 	
 	<%= javascript_include_tag "jquery.js"%>
+	
+	<script type="text/javascript">
+	    jQuery.noConflict();
+	    var $j = jQuery;
+	</script>
+	
 	<%= javascript_include_tag "jquery.jgrowl.js"%>
 	
 	<!-- jQuery ui -->

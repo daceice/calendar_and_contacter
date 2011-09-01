@@ -21,7 +21,7 @@
 	  <td rowspan=4><%= link_to 'Show', contacter_path(:id => contacter.id, :return_path => 'bin') %>
 <% if session[:user_id] == contacter.user_id %>
     <%= link_to 'Edit', edit_contacter_path(:id => contacter.id, :return_path => 'bin') %>
-		    <%= link_to 'Destroy', contacter, :confirm => 'Are you sure?', :method => :delete %>	
+		<%= link_to 'Destroy', contacter, :confirm => 'Are you sure?', :method => :delete %>	
 	<% end %>	
 	  </td>
 	</tr>
@@ -52,4 +52,4 @@
  | <%= link_to 'Back', bin_contacters_path%>
 <% end %>
 <br>
-<%= (page_admin( :contacters_path, @page.count, @page.limit, params, ' ')).html_safe%>
+<%= (page_admin( :bin_contacters_path, @page.count, @page.limit, params, ' ')).html_safe%>

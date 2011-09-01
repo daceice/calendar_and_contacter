@@ -1,7 +1,7 @@
 class ContactersController < ApplicationController
   
   before_filter :require_contacter_available, :only => [:show]
-  before_filter :require_contacter_editable, :only => [:edit, :update, :destroy]
+  before_filter :require_contacter_editable, :only => [:edit, :update, :destroy, :delete]
   
   # GET /contacters
   # GET /contacters.xml

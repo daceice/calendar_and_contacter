@@ -12,7 +12,9 @@ CalendarAndContacter::Application.routes.draw do
   resources :calendars do 
     member do
       get 'to_bin'
+      get 'delete'
     end
+    
     collection do 
       get 'bin'
     end
@@ -22,6 +24,7 @@ CalendarAndContacter::Application.routes.draw do
     member do
       get 'to_bin'
     end
+    
     collection do 
       get 'bin'
     end
