@@ -1,0 +1,38 @@
+	<link rel='stylesheet' type='text/css' href='http://arshaw.com/css/main.css?6' />	<link rel='stylesheet' type='text/css' href='http://arshaw.com/css/fullcalendar.css?3' /> 
+ 
+	<link rel='stylesheet' type='text/css' href='http://arshaw.com/js/fullcalendar-1.5.2/fullcalendar/fullcalendar.css' /> 
+	<script type='text/javascript' src='http://arshaw.com/js/fullcalendar-1.5.2/jquery/jquery-1.5.2.min.js'></script> 
+	<script type='text/javascript' src='http://arshaw.com/js/fullcalendar-1.5.2/jquery/jquery-ui-1.8.11.custom.min.js'></script> 
+	<script type='text/javascript' src='http://arshaw.com/js/fullcalendar-1.5.2/fullcalendar/fullcalendar.min.js'></script> 
+
+	<div id='calendar' style='margin:3em 0;font-size:13px;width:600px'></div> 
+	<script type='text/javascript'> 
+ 
+	
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			editable: true,
+			disableDragging: true,
+			events: [
+				{
+					title: 'fby过来',
+					start: new Date('2011.8.27')
+				},
+				{
+					title: '跟PP出去',
+					start: new Date('2011.8.28')
+				}
+			]
+		});
+		
+ 
+	</script> 
